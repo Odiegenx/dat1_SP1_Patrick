@@ -7,7 +7,7 @@ class EllipseEntity {
   boolean on;
   float speedX;
   float speedY;
-  
+  //// the constructor
   EllipseEntity(float tmpX, float tmpY, float tmpW, float tmpH, float tmpSpeedX, float tmpSpeedY){
   
     x = tmpX;
@@ -19,9 +19,9 @@ class EllipseEntity {
     on = false;
   }
 
+ //// checks if the mouse hits an EllipseEntity. 
 void mouseOverCheck(int mX , int mY){
-  
-  //// checks if the mouse hits an EllipseEntity.  
+   
   if (dist(mX, mY, x, y) < (w/2)){ 
       on = true;
     } else {
@@ -36,20 +36,7 @@ void mouseOverCheck(int mX , int mY){
            fill(random(255),0,0);
            gameStage = 0;
            on = false;
-        }else{
-           fill(150);
-        }
-        noStroke();
-        ellipse(x,y,w,h); 
-        on = false;
-     }
-     
-       void displayEllipseArray() {
-  
-        if(on){
-           fill(random(255),0,0);
-           gameStage = 0;
-           on = false;
+           System.out.println("You hit an Ellipse!");
         }else{
            fill(150);
         }
@@ -58,7 +45,7 @@ void mouseOverCheck(int mX , int mY){
         on = false;
      }
   
-   //// moves EllipseEntity ojects level 1. 
+   //// moves EllipseEntity ojects level 1 and checks for collision with walls, and inverts speedX if detected . 
    
    void moveEllipseLevel1(){
            if(gameStage == 1){
@@ -70,6 +57,7 @@ void mouseOverCheck(int mX , int mY){
               speedX = speedX*-1;
              }
        }             
+ //// moves my ellipse Entities on level 2 and checks for collision with walls, and inverts speedX and speedY if detected        
     void moveEllipseLevel2(){
               
                if(gameStage == 2){
@@ -83,18 +71,19 @@ void mouseOverCheck(int mX , int mY){
                   speedY = speedY*-1;
                }
        }
-       
+
+  //// moves my ellipse Entities on level 3 and checks for collision with other Ellipse Entities/walls, and inverts speedX if detected     
     void moveEllipseLevel3(EllipseEntity input_){
            if(gameStage == 3){
               x = x+speedX;
               input_.x = input_.x + input_.speedX;
-           if( dist(x,y,input_.x,input_.y) < horiRectHeight*2){
+           if( dist(x,y,input_.x,input_.y) < horiRectHeight*2){    
               speedX = speedX*-1;
               input_.speedX = input_.speedX*-1;
            }
            if(x  > width-(vertiRectWidth*1.5)){
               speedX = speedX*-1;
-              }
+           }
            if(input_.x  > width-(vertiRectWidth*1.5)){
            input_.speedX = input_.speedX*-1;
            }

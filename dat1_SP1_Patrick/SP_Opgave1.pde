@@ -6,7 +6,7 @@ RectEntity[] leftWalls = new RectEntity[10];
 RectEntity[] rightWalls = new RectEntity[10];
 RectEntity[] lowerWalls = new RectEntity[10];
 
-//// the obstacle arrats
+//// the obstacle arrays
 RectEntity[] upperObstacleWalls = new RectEntity[10];
 RectEntity[] upperMiddleObstacleWalls1 = new RectEntity[10];
 RectEntity[] lowerMiddleObstacleWalls1 = new RectEntity[10];
@@ -15,7 +15,7 @@ RectEntity[] lowerMiddleObstacleWalls2 = new RectEntity[10];
 RectEntity[] lowerObstacleWalls = new RectEntity[10];
 //// EllipseEntity Array for level 2
 EllipseEntity[] EllipseLevel2 = new EllipseEntity[50];
-//// start and end objects
+//// start and end objects for the differant levels
 RectEntity start;
 RectEntity end;
 RectEntity startLevel2;
@@ -26,7 +26,7 @@ RectEntity endLevel3;
 RectEntity startButtom;
 RectEntity endRect;
 
-//// My ellipse obstacles
+//// My ellipse obstacles for level 1 og 2
 EllipseEntity upperEllipse;
 EllipseEntity middleEllipse;
 EllipseEntity lowerEllipse;
@@ -98,11 +98,12 @@ void setup(){
     startButtom = new RectEntity(270,400,470,270);  //// used for text background
     endRect = new RectEntity(270,400,470,250);      //// used for text background
  
+   //// used to keep track of much time has ellapsed since program start.
     time = millis();
 }
 void draw(){
   background(255);
-//// displays time used in seconds
+//// makes mills "stop" counting in gamestage 4 (never really stops, but the display will no longer change)
   if(gameStage != 4){
   time = millis()/1000;
   }
@@ -116,44 +117,19 @@ void draw(){
    //// checks if you are over start
       start.mouseOverCheckMoveOn(mouseX,mouseY);
       }
+      
+      //// simple instruktion on what to do.
       if(gameStage == 0){
       startButtom.displayWalls();
        fill(0);
        textSize(30);
-       text("Click on the green squares to start.\n and move between levels.\n Get the mouse to the opposite\n green square without \nhitting anything to win.", 300,450);
+       text("Click on the green squares \n to move between levels.\n Get the mouse to the opposite\n green square without \nhitting anything to win.", 300,450);
       }
  
 ////////////////// displays used for gameStage == 1///////////////////////
     
     if(gameStage == 1){  
-          
-         
-         //// draws the objects in the upperWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 2 if hit 
-         simpleWalldisplay(upperWalls,9);
-         //// draws the objects in the leftWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 2 if hit
-         simpleWalldisplay(leftWalls,9);
-        //// draws the objects in the rightWalls array and changes its color if hit and leaves out the first one, also sets the gameStage to 2 if hit
-         simpleWalldisplay(rightWalls,0);
-        //// draws the objects in the LowerWalls array and changes its color if hit and leaves out the first one, also sets the gameStage to 2 if hit
-        simpleWalldisplay(lowerWalls,0);
-       //// draws the objects in my obstacle arrays and leaves out at specified spots in the array index. also sets the gameStage to 2 if hit
-        simpleRectObstacleDisplay(upperObstacleWalls,2,6,9);        
-        simpleRectObstacleDisplay(upperMiddleObstacleWalls1,0,2,6);
-        simpleRectObstacleDisplay(lowerMiddleObstacleWalls1,0,4);        
-        simpleRectObstacleDisplay(upperMiddleObstacleWalls2,2,6,9);
-        simpleRectObstacleDisplay(lowerMiddleObstacleWalls2,4,9);        
-        simpleRectObstacleDisplay(lowerObstacleWalls,0,2,6);
-        ///// draws my ellipse obstacles
-        upperEllipse.displayEllipse();
-        middleEllipse.displayEllipse();
-        lowerEllipse.displayEllipse();
-        //// Moves my ellipse obstacles
-        upperEllipse.moveEllipseLevel1();
-        middleEllipse.moveEllipseLevel1();
-        lowerEllipse.moveEllipseLevel1();
-        //// displays the end bottem and sets game stage to 3 if you hit it.
-        end.displayEndLevel1();
-        
+      
         //// Mouse Over Checks for gameStage == 1
         simpleMouseOverCheck(upperWalls);
         simpleMouseOverCheck(upperObstacleWalls);
@@ -174,6 +150,33 @@ void draw(){
         lowerEllipse.mouseOverCheck(mouseX,mouseY);
         //// checks if you are over end
         end.mouseOverCheckMoveOn(mouseX,mouseY);
+          
+        //// displays the end bottem and sets game stage to 2 if you hit it.
+        end.displayEndLevel1();
+         //// draws the objects in the upperWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 0 if hit 
+         simpleWalldisplay(upperWalls,9);
+         //// draws the objects in the leftWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 0 if hit
+         simpleWalldisplay(leftWalls,9);
+        //// draws the objects in the rightWalls array and changes its color if hit and leaves out the first one, also sets the gameStage to 0 if hit
+         simpleWalldisplay(rightWalls,0);
+        //// draws the objects in the LowerWalls array and changes its color if hit and leaves out the first one, also sets the gameStage to 0 if hit
+        simpleWalldisplay(lowerWalls,0);
+        //// draws the objects in my obstacle arrays and leaves out at specified spots in the array index. also sets the gameStage to 0 if hit
+        simpleRectObstacleDisplay(upperObstacleWalls,2,6,9);        
+        simpleRectObstacleDisplay(upperMiddleObstacleWalls1,0,2,6);
+        simpleRectObstacleDisplay(lowerMiddleObstacleWalls1,0,4);        
+        simpleRectObstacleDisplay(upperMiddleObstacleWalls2,2,6,9);
+        simpleRectObstacleDisplay(lowerMiddleObstacleWalls2,4,9);        
+        simpleRectObstacleDisplay(lowerObstacleWalls,0,2,6);
+        ///// draws my ellipse obstacles
+        upperEllipse.displayEllipse();
+        middleEllipse.displayEllipse();
+        lowerEllipse.displayEllipse();
+        //// Moves my ellipse obstacles
+        upperEllipse.moveEllipseLevel1();
+        middleEllipse.moveEllipseLevel1();
+        lowerEllipse.moveEllipseLevel1();
+
 
 }
     
@@ -186,7 +189,14 @@ void draw(){
 /////////////// displays used for gameStage == 2 ////
       if(gameStage == 2){
           
-        
+        //// mouse over checks for level 2
+        simpleMouseOverCheck(upperWalls);
+        simpleMouseOverCheck(leftWalls);
+        simpleMouseOverCheck(rightWalls);       
+        simpleMouseOverCheck(lowerWalls);
+        mouseOverCheckEllipseArray(EllipseLevel2);
+        endLevel2.mouseOverCheckMoveOn(mouseX,mouseY);
+         
          //// draws the objects in the upperWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 2 if hit 
          simpleWalldisplay(upperWalls,9);
          //// draws the objects in the leftWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 2 if hit
@@ -201,17 +211,15 @@ void draw(){
         simpleEllipseDisplayLevel2(EllipseLevel2);
         //// Moves and checks for hit with walls for EllipseEntities in level 2
         moveEllipseArrayLevel2(EllipseLevel2);
-        //// mouse over checks for level 2
-        simpleMouseOverCheck(upperWalls);
-        simpleMouseOverCheck(leftWalls);
-        simpleMouseOverCheck(rightWalls);       
-        simpleMouseOverCheck(lowerWalls);
-        mouseOverCheckEllipseArray(EllipseLevel2);
-        endLevel2.mouseOverCheckMoveOn(mouseX,mouseY);
+
 
  }
+ //////////////////////////////////////////////////////////////////
+ 
+ //////////////// gamestage 3 /////////////////////////////////////
 
       if(gameStage == 3){
+        
         //// Mouse Over Checks for gameStage == 3
         simpleMouseOverCheck(upperWalls);
         simpleMouseOverCheck(upperObstacleWalls);
@@ -235,6 +243,7 @@ void draw(){
         lowerEllipse2.mouseOverCheck(mouseX,mouseY);
         //// checks if you are over end
         endLevel3.mouseOverCheckMoveOn(mouseX,mouseY);
+        
           //// draws the objects in the upperWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 2 if hit 
          simpleWalldisplay(upperWalls,9);
          //// draws the objects in the leftWalls array and changes its color if hit and leaves out the last one, also sets the gameStage to 2 if hit
@@ -267,6 +276,9 @@ void draw(){
     
     
  }
+ /////////////////////////////////////////////////////////////////
+ 
+ //////////// gamestage 4 ///////////////////////////////////////
  
      if(gameStage == 4){
 
@@ -283,8 +295,8 @@ void draw(){
      }
      
   }    
-println(gameStage);
-
+////////////////////////////////////////////////////////////////////
+   //// displays time used in seconds in the levels
   fill(0);
   text(time,30,45);
 
@@ -292,18 +304,22 @@ println(gameStage);
 
 /////// functions used in the code/////////////////////
 
+
+//// function used to initiate array with Vertical RectEntity objects 
 void simpleInitiateVerti(RectEntity[] input_, int tmpX, int tmpY,int tmpW,int tmpH){
        for (int i  = 0; i < input_.length; i++){
            input_[i] = new RectEntity(tmpX*i,tmpY,tmpW,tmpH);
        } 
   
 }
+//// function used to initiate array with horisontal RectEntity objects 
 void simpleInitiateHori(RectEntity[] input_, int tmpX, int tmpY,int tmpW,int tmpH){
        for (int i  = 0; i < input_.length; i++){
            input_[i] = new RectEntity(tmpX,tmpY*i,tmpW,tmpH);
        } 
   
 }
+//// function used to initiate array with EllipseEntity  objects 
 void InitiateEllipeLevel2(EllipseEntity[] input_, int tmpW,int tmpH){
        for (int i  = 0; i < input_.length; i++){
            input_[i] = new EllipseEntity(random(100,900),random(100,900),tmpW,tmpH, (int)random(-5,5),(int)random(-5,5));
@@ -311,26 +327,28 @@ void InitiateEllipeLevel2(EllipseEntity[] input_, int tmpW,int tmpH){
   
 }
 
+//// funtion to display the objects in "input" arrays
 void simpleWalldisplay(RectEntity[] input_){
            
          for(int i = 0; i < input_.length;i++){
                input_[i].displayWalls();            
        }         
 }
-
+//// funtion to display the objects in "input" arrays
 void simpleEllipseDisplayLevel2(EllipseEntity[] input_){
            
          for(int i = 0; i < input_.length;i++){
                input_[i].displayEllipse();            
        }         
 }
-
+//// funtion to move the objects in "input" arrays
 void moveEllipseArrayLevel2(EllipseEntity[] input_){
            
          for(int i = 0; i < input_.length;i++){
                input_[i].moveEllipseLevel2();            
        }         
 }
+//// funtion to display the objects in "input" arrays and leaves out one at different index spots to make my labyrinth
 void simpleWalldisplay(RectEntity[] input_,int noRectSpot1){
            
          for(int i = 0; i < input_.length;i++){
@@ -341,6 +359,7 @@ void simpleWalldisplay(RectEntity[] input_,int noRectSpot1){
                }      
          }         
 }
+//// funtion to display the objects in "input" arrays and leaves out one at different index spots to make my labyrinth
 void simpleWalldisplay(RectEntity[] input_,int noRectSpot1, int noRectSpot2){
            
          for(int i = 0; i < input_.length;i++){
@@ -351,7 +370,7 @@ void simpleWalldisplay(RectEntity[] input_,int noRectSpot1, int noRectSpot2){
                }      
          }         
 }
-
+//// funtion to display the objects in "input" arrays and leaves out one at different index spots to make my labyrinth
 void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1){
            
          for(int i = 0; i < input_.length;i++){
@@ -362,6 +381,7 @@ void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1){
              }
        }        
 }
+//// funtion to display the objects in "input" arrays and leaves out one at different index spots to make my labyrinth
 void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1,int noRectSpot2){
            
          for(int i = 0; i < input_.length;i++){
@@ -372,6 +392,7 @@ void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1,int noRectSp
              }
        }         
 }
+//// funtion to display the objects in "input" arrays and leaves out one at different index spots to make my labyrinth
 void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1, int noRectSpot2, int noRectSpot3){
            
          for(int i = 0; i < input_.length;i++){
@@ -382,6 +403,7 @@ void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1, int noRectS
              }
        }         
 }
+//// funtion to display the objects in "input" arrays and leaves out one at different index spots to make my labyrinth
 void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1, int noRectSpot2, int noRectSpot3, int noRectSpot4){
            
          for(int i = 0; i < input_.length;i++){
@@ -392,14 +414,14 @@ void simpleRectObstacleDisplay(RectEntity[] input_, int noRectSpot1, int noRectS
              }
        }         
 }
-
+//// function for mouse over checks for RectEntities 
 void simpleMouseOverCheck(RectEntity[] input_){
   
         for(int i = 0; i < input_.length;i++){
            input_[i].mouseOverCheck(mouseX, mouseY);
         }  
 }
-
+//// function for mouse over checks of ellipse Entities 
 void mouseOverCheckEllipseArray(EllipseEntity[] input_){
   
         for(int i = 0; i < input_.length;i++){

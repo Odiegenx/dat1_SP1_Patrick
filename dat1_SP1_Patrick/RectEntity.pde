@@ -1,3 +1,4 @@
+//// name of class, i know its not the best... 
 class RectEntity {
   
   float x;
@@ -5,7 +6,7 @@ class RectEntity {
   float w;
   float h;
   boolean on;
-  
+ //// the  constructor  
   RectEntity(float tmpX, float tmpY, float tmpW, float tmpH){
   
     x = tmpX;
@@ -22,24 +23,26 @@ void mouseOverCheck(int mX , int mY){
     } else {
       on = false;
     }
-  } 
+  }
+  //// checks if the mouse hits a RectEntity object and if mouse is pressed. used to move between levels.
   void mouseOverCheckMoveOn(int mX , int mY){
-  //// checks if the mouse hits a RectEntity object.  
+    
   if ( mX > this.x && mX < this.x + this.w && mY > this.y && mY < this.y + this.h && mousePressed){ 
-        on = true;
+      on = true;
     } else {
       on = false;
     }
   }
+ 
 
-  //// displays RectEntity objects as rects
+ //// displays RectEntity objects as rects and changes gamestage if on is true (changed in mouseoverchecks)
 void displayWalls() {
   
   if(on){
      fill(random(255),0,0);
      gameStage = 0;
      on = false;
-     println("Walls");
+     println("You hit a Wall!!");
      }else{
      fill(150);
      }
@@ -48,12 +51,15 @@ void displayWalls() {
     on = false;
   }
   
+ //// displays end object as rects and changes gamestage if on is true (changed in mouseoverchecks) 
   void displayEndLevel1() {
   
   if(on){
-     fill(random(255),0,0);
-     gameStage = 2;  
-     on = false;
+       if(gameStage == 1){
+       fill(random(255),0,0);
+       gameStage = 2;  
+       on = false;
+       }
      }else{
      fill(0,255,0);
      }
@@ -61,14 +67,15 @@ void displayWalls() {
     rect(x,y,w,h);
     on = false;
 }
-  
+  //// displays end object as rects and changes gamestage if on is true (changed in mouseoverchecks) 
   void displayEndLevel2() {
   
   if(on){
-     fill(random(255),0,0);
-     gameStage = 3;
-     println("end - level 2");
-     on = false;
+       if(gameStage == 2){
+       fill(random(255),0,0);
+       gameStage = 3;
+       on = false;
+       }
      }else{
      fill(0,255,0);
      }
@@ -76,13 +83,15 @@ void displayWalls() {
     rect(x,y,w,h);
     on = false;
   }  
+  //// displays end object as rects and changes gamestage if on is true (changed in mouseoverchecks) 
   void displayEndLevel3() {
   
   if(on){
-     fill(random(255),0,0);
-     gameStage = 4;
-     println("end - level 3");
-     on = false;
+      if(gameStage == 3){
+       fill(random(255),0,0);
+       gameStage = 4;
+       on = false;
+       }
      }else{
      fill(0,255,0);
      }
@@ -91,13 +100,13 @@ void displayWalls() {
     on = false;
   }
   
+  //// just used to display the background for my text  
   
   void displayStartLevel1() {
   
   if(on){
      fill(0,255,0); 
         gameStage = 1;  
-        println("ged");
         on = false;    
      }else{
      fill(0,255,0);
@@ -105,36 +114,6 @@ void displayWalls() {
     noStroke();
     rect(x,y,w,h);
     on = false;
-  }
-  ///////////////////// KUN FOR TESTS
-    void displayStartLevel2() {
-  
-  if(on){
-     fill(0,255,0);
-     if(gameStage == 0){
-        gameStage = 2;
-        on = false;
-     }
-     }else{
-     fill(0,255,0);
-     }
-    noStroke();
-    rect(x,y,w,h);
-    on = false;
-  }
-/////////////////////////////////////////////  
-    void displayEndMessage() {
-  
-  if(on){
-     fill(random(255),0,0);
-     gameStage = 2;
-     on = false;
-     }else{
-     fill(155);
-     }
-    noStroke();
-    rect(x,y,w,h);
-    on = false;
-  }
+  } 
     
 }
